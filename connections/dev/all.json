@@ -1,0 +1,24 @@
+{
+  "my_trino_connection": {
+    "conn_type": "trino",
+    "description": "",
+    "login": "admin",
+    "password": null,
+    "host": "localhost",
+    "port": 3400,
+    "schema": "memory",
+    "extra": ""
+  },
+  "my_galaxy_connection": {
+    "conn_type": "trino",
+    "description": "",
+    "login": "<fill in your galaxy login>",
+    "password": "<fill in your galaxy pass>",
+    "host": "<fill in your galaxy hostname>",
+    "port": 443,
+    "schema": "memory",
+    "extra": {
+      "protocol": "https"
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "clean-airflow-database",
+      "command": "rm -rf ${workspaceFolder}/airflow/airflow.db",
+      "type": "shell",
+      "problemMatcher": []
+    },
+    {
+      "label": "update-airflow-database",
+      "command": "source ${workspaceFolder}/venv/bin/activate;airflow db init",
+      "dependsOn": "clean-airflow-database",
+      "type": "shell",
+      "options": {
+        "env": {
+          "AIRFLOW_HOME": "${workspaceFolder}/airflow"
+        }
+      }
+    },
+    {
+      "label": "create-airflow-user",
+      "command": "source ${workspaceFolder}/venv/bin/activate;airflow users create --username admin --firstname admin --lastname admin --password admin --role Admin --email admin@example.org",
+      "dependsOn": "update-airflow-database",
+      "type": "shell",
+      "options": {
+        "env": {
+          "AIRFLOW_HOME": "${workspaceFolder}/airflow"
+        }
+      }
+    },
+    {
+      "label": "import-airflow-variables",
+      "command": "source ${workspaceFolder}/venv/bin/activate;if [ -f \"${workspaceFolder}/variables/dev/all.json\" ]; then airflow variables import ${workspaceFolder}/variables/dev/all.json; fi",
+      "type": "shell",
+      "dependsOn": "create-airflow-user",
+      "options": {
+        "env": {
+          "AIRFLOW_HOME": "${workspaceFolder}/airflow"
+        }
+      }
+    },
+    {
+      "label": "import-airflow-connections",
+      "command": "source ${workspaceFolder}/venv/bin/activate;if [ -f \"${workspaceFolder}/connections/dev/all.json\" ]; then airflow connections import ${workspaceFolder}/connections/dev/all.json; fi",
+      "type": "shell",
+      "dependsOn": "import-airflow-variables",
+      "options": {
+        "env": {
+          "AIRFLOW_HOME": "${workspaceFolder}/airflow"
+        }
+      }
+    }
+  ]
+}

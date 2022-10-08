@@ -1,0 +1,26 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+      {
+          "name":"launch_dag",
+          "type":"python",
+          "request":"launch",
+          "program":"${workspaceFolder}/venv/bin/airflow",
+          "preLaunchTask": "import-airflow-connections",
+          "console": "integratedTerminal",
+          "justMyCode": false,
+          "env": {
+              "AIRFLOW_HOME": "${workspaceFolder}/airflow",
+              "AIRFLOW__CORE__LOAD_EXAMPLES": "False",
+              "AIRFLOW__CORE__DAGS_FOLDER": "${workspaceFolder}/dags",
+              "AIRFLOW__CORE__EXECUTOR": "SequentialExecutor"
+          },
+          "args":[
+              "dags",
+              "test",
+              "demo",
+              "2022-09-10"
+          ]
+      }
+  ]
+}
